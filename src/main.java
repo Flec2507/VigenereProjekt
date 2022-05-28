@@ -1,4 +1,5 @@
 import java.util.ArrayList;
+import java.util.Locale;
 import java.util.Scanner;
 import java.util.regex.Pattern;
 
@@ -9,6 +10,8 @@ public class main {
     public static ArrayList<Character> repeatingKey = new ArrayList<>();
 
     public static int userInputLength = 0;
+
+    public static String output = "";
 
     public static void main(String[] args) {
         encode(getInput("input"), getInput("key"));
@@ -36,6 +39,11 @@ public class main {
         for (int i = 0; i < repeatingKey.size(); i++) {//Print the key for clarity
             System.out.print(repeatingKey.get(i));
         }
+        for (int i = 0; i < userInputLength; i++) {//Encoding
+            char A = input.charAt(i);//Letter at the position of the cycle in the input word
+            char B = repeatingKey.get(i);//Letter at the position of the cycle in the key word
+            char C = ' ';//Letter after encoding
+        }
     }
 
     public static String getInput(String use) {//Get stuff from the User
@@ -47,6 +55,7 @@ public class main {
             for (; ; ) {
                 userInput = "";
                 userInput = scanner.nextLine();
+                userInput = userInput.toUpperCase(Locale.ROOT);
                 if (!Pattern.matches("[a-zA-Z]+", userInput)) {//If the Text contains anything else than letters it is unusable
                     System.out.println("Ich bin leider nicht in der Lage irgendetwas abseits von Buchstaben zu verstehen... Bitte versuchen Sie es erneut!");
                 } else {//Everything should work with this
@@ -61,6 +70,7 @@ public class main {
             for (; ; ) {
                 userKey = "";
                 userKey = scanner.nextLine();
+                userKey = userKey.toUpperCase(Locale.ROOT);
                 if (!Pattern.matches("[a-zA-Z]+", userKey)) {//Same thing
                     System.out.println("Ich bin leider nicht in der Lage irgendetwas abseits von Buchstaben zu verstehen... Bitte versuchen Sie es erneut!");
                 } else {
