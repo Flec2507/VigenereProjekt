@@ -14,7 +14,27 @@ public class main {
     public static String output = "";//Self-explanatory
 
     public static void main(String[] args) {
-        encode(getInput("input"), getInput("key"));//Self-explanatory
+        System.out.println("Willkommen beim Vigenère Ent-und Decoder!");
+        Scanner scanner = new Scanner(System.in);
+        String userInput = "";
+        for (; ; ) {
+            System.out.println("Was möchten Sie tun(E-Encode, D-Decode, B-Break)?");
+            userInput = scanner.nextLine();
+            userInput = userInput.toUpperCase();
+            if (userInput.equals("E")) {
+                encode(getInput("input"), getInput("key"));//Self-explanatory
+            } else if (userInput.equals("D")) {
+                decode(getInput("input"), getInput("key"));//Self-explanatory
+            } else if (userInput.equals("B")) {
+                break;//Stop the program
+            } else {
+                System.out.println("ERROR! Das war keine der Optionen.");//Self-explanatory
+            }
+        }
+    }
+
+    public static void decode(String input, String key) {
+
     }
 
     public static void encode(String input, String key) {
@@ -37,17 +57,20 @@ public class main {
             }
         }
 
+        /*
         System.out.println(input);//Print the Text for clarity
         for (int i = 0; i < repeatingKey.size(); i++) {//Print the resized key for clarity under the Text to check if they are the same length
             System.out.print(repeatingKey.get(i));
         }
         System.out.println("");//Switch to next line
+        */
 
         char A = ' ';//Usage explained later
         char B = ' ';//Usage explained later
         char C = ' ';//Usage explained later
         int D = 0;//Usage explained later
         int E = 0;//Usage explained later
+        output = "";//Every time encoding is called, this has to be empty
 
         for (int i = 0; i < userInputLength; i++) {//Encoding the Text
             A = input.charAt(i);//Letter at the position of the for-cycle in the input word
@@ -59,12 +82,12 @@ public class main {
             E = search(A);
             E += D;//Set the number corresponding to the Text's letter plus the amount of circulation in the grid at the Key's letter
             if (E > 25) {//If out of bounds, wrap around
-                E = E - 25;
+                E = E - 26;
             }
             C = alphabet[E];//Set the output letter to the letter at the position of moved number E in the alphabet
             output += C;//Add the letter to the output word
         }
-        System.out.println(output);//Print the output word
+        System.out.println("Encoded Text: " + output);//Print the output word
     }
 
     public static int search(char letter) {//Gives me the position of letter requested in the Alphabet
@@ -92,7 +115,7 @@ public class main {
                 if (!Pattern.matches("[a-zA-Z]+", userInput)) {//If the Text contains anything else than letters it is unusable, when we rely on a letters only grid
                     System.out.println("Ich bin leider nicht in der Lage irgendetwas abseits von Buchstaben zu verstehen... Bitte versuchen Sie es erneut!");
                 } else {//Everything should work with this
-                    System.out.println("Pure Buchstaben");
+                    //System.out.println("Pure Buchstaben");
                     break;
                 }
             }
@@ -110,7 +133,7 @@ public class main {
                     if (userKey.length() > userInputLength) {//A Key longer than the Text is not useful
                         System.out.println("Ihr Key ist länger als Ihr Input. Das funktioniert hier so nicht. Bitte versuchen Sie es erneut!");
                     } else {//Same thing
-                        System.out.println("Pure Buchstaben");
+                        //System.out.println("Pure Buchstaben");
                         break;
                     }
                 }
