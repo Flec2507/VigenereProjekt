@@ -34,7 +34,56 @@ public class main {
     }
 
     public static void decode(String input, String key) {
+        System.out.println("Key: " + key + ", Text: " + input);//Print both for clarity
 
+        if (key.length() != userInputLength) {//Resize the Key to the same length as the Text for easy decoding
+            for (; ; ) {
+                boolean breaker = false;//Helper bool for stopping the for(;;) loop
+                for (int i = 0; i < key.length(); i++) {//Go through the key and add the letters one after the other
+                    if (repeatingKey.size() < userInputLength) {//As long as the Key's length is smaller than the Text's length, add letters
+                        repeatingKey.add(key.charAt(i));
+                    } else {//When they are the same length, stop everything
+                        breaker = true;
+                        break;
+                    }
+                }
+                if (breaker) {
+                    break;
+                }
+            }
+        }
+
+        /*
+        System.out.println(input);//Print the Text for clarity
+        for (int i = 0; i < repeatingKey.size(); i++) {//Print the resized key for clarity under the Text to check if they are the same length
+            System.out.print(repeatingKey.get(i));
+        }
+        System.out.println("");//Switch to next line
+        */
+
+        char A = ' ';//Usage explained later
+        char B = ' ';//Usage explained later
+        char C = ' ';//Usage explained later
+        int D = 0;//Usage explained later
+        int E = 0;//Usage explained later
+        output = "";//Every time decoding is called, this has to be empty
+
+        for (int i = 0; i < userInputLength; i++) {//Decoding the Text
+            A = input.charAt(i);//Letter at the position of the for-cycle in the input word
+            B = repeatingKey.get(i);//Letter at the position of the for-cycle in the key word
+            C = ' ';//Letter after encoding
+            D = 0;//Position of Key-Letter in alphabet
+            E = 0;//Conversion from letter to number for better movement in the grid
+            D = search(B);//Usage explained at definition
+            E = search(A);
+            E -= D;//Set the number corresponding to the Text's letter plus the amount of circulation in the grid at the Key's letter
+            if (E < 0) {//If out of bounds, wrap around
+                E = E + 26;
+            }
+            C = alphabet[E];//Set the output letter to the letter at the position of moved number E in the alphabet
+            output += C;//Add the letter to the output word
+        }
+        System.out.println("Encoded Text: " + output);//Print the output word
     }
 
     public static void encode(String input, String key) {
