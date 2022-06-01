@@ -14,7 +14,7 @@ public class main {
     public static String output = "";//Self-explanatory
 
     public static void main(String[] args) {
-        System.out.println("Willkommen beim Vigenère Ent-und Decoder!");
+        System.out.println("Willkommen beim Vigenère En-und Decoder!");
         Scanner scanner = new Scanner(System.in);
         String userInput = "";
         for (; ; ) {
